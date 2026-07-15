@@ -75,3 +75,19 @@ src/
 - Explore, search, notifications
 - Profile with badges, achievements, streaks
 - Admin dashboard
+
+## Deploy to Render
+
+1. Push this repo to GitHub
+2. Go to [Render Dashboard](https://dashboard.render.com) → **New** → **Static Site**
+3. Connect your GitHub repo and select this `frontend/` directory
+4. Configure:
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+5. Add env var:
+   - `VITE_API_URL` → your backend Render URL (e.g. `https://memogram-backend.onrender.com`)
+6. Deploy
+
+Your frontend URL will be something like `https://memogram-frontend.onrender.com`
+
+> **Note**: After deploying the frontend, update the backend's `FRONTEND_URL` env var with the frontend URL to enable CORS.
