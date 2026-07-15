@@ -1,16 +1,77 @@
-# React + Vite
+# Memogram Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React single-page application for the Memogram school memories social platform.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework**: React 19 + Vite 8
+- **Styling**: Tailwind CSS v4
+- **Routing**: React Router v7
+- **State**: Context API (Auth, Socket)
+- **Real-time**: Socket.IO client
+- **Animations**: Framer Motion
+- **HTTP**: Axios
+- **Icons**: React Icons (Heroicons v2)
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+cp .env.example .env   # set VITE_API_URL
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+## Environment Variables
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+| Variable | Description |
+|----------|-------------|
+| `VITE_API_URL` | Backend API base URL (default: http://localhost:5000/api) |
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server (port 5173) |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+
+## Project Structure
+
+```
+src/
+├── assets/              # Static assets (images, SVGs)
+├── components/
+│   ├── achievements/    # Achievement badges & grids
+│   ├── admin/           # Admin dashboard components
+│   ├── albums/          # Album cards & modals
+│   ├── badges/          # Badge display components
+│   ├── before-now/      # Before & Now feature
+│   ├── chat/            # Messenger (chat, calls, voice)
+│   ├── clubs/           # Club cards & headers
+│   ├── community/       # Community pages
+│   ├── events/          # Event components
+│   ├── feed/            # Post cards, create post
+│   ├── guess-who/       # Guess Who game
+│   ├── layout/          # TopBar, NavSidebar, BottomNav
+│   ├── profile/         # Profile header, stats, tabs
+│   ├── recommendations/ # Memory recommendations
+│   ├── streaks/         # Streak display
+│   └── ui/              # Reusable: Avatar, Button, Input, Modal, MediaViewer
+├── contexts/            # AuthContext, SocketContext
+├── hooks/               # useInfiniteScroll
+├── pages/               # Route pages (30+)
+├── routes/              # AppRoutes.jsx
+├── services/            # API service modules
+└── utils/               # formatDate, cn, formatNumber
+```
+
+## Features
+
+- Home feed with premium media cards
+- Real-time messaging with voice messages, video calls
+- Communities, schools, clubs
+- Memories, On This Day, Before & Now
+- Guess Who game
+- Explore, search, notifications
+- Profile with badges, achievements, streaks
+- Admin dashboard
