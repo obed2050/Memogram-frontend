@@ -8,10 +8,11 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          motion: ['framer-motion'],
-          socket: ['socket.io-client'],
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom')) return 'vendor';
+          if (id.includes('node_modules/react')) return 'vendor';
+          if (id.includes('node_modules/framer-motion')) return 'motion';
+          if (id.includes('node_modules/socket.io-client')) return 'socket';
         },
       },
     },
