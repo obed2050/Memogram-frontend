@@ -5,7 +5,6 @@ const api = axios.create({
     ? `${import.meta.env.VITE_API_URL}/api`
     : '/api',
   headers: { 'Content-Type': 'application/json' },
-  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {

@@ -28,7 +28,6 @@ export const SocketProvider = ({ children }) => {
     const newSocket = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling'],
-      withCredentials: true,
     });
 
     newSocket.on('connect', () => {
