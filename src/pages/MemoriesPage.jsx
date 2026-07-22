@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { memoryService } from '../services';
+import { postService } from '../services';
 import PostCard from '../components/feed/PostCard';
 import { PostSkeleton } from '../components/ui/Skeleton';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
@@ -14,14 +14,15 @@ const MemoriesPage = () => {
 
   const fetchMemories = useCallback(async (pageNum = 1) => {
     try {
-      const res = await memoryService.getMemories({ page: pageNum, limit: 20 });
-      const newMemories = res.data.data;
+      const res = await postService.getFeed({ page: pageNum, limit: 20, type: 'memory' });
+      const data = res.data;
+      const newMemories = data.data || [];
       if (pageNum === 1) {
         setMemories(newMemories);
       } else {
         setMemories((prev) => [...prev, ...newMemories]);
       }
-      setHasMore(res.data.pagination.hasNext);
+      setHasMore(data.pagination?.hasNext || false);
     } catch {
       toast.error('Failed to load memories');
     } finally {
@@ -56,7 +57,7 @@ const MemoriesPage = () => {
         <div className="space-y-4">
           {memories.map((memory, index) => (
             <div key={memory.id} ref={index === memories.length - 1 ? lastRef : null}>
-              <PostCard post={{ ...memory, type: 'memory' }} />
+              <PostCard post={memory} />
             </div>
           ))}
           {!hasMore && memories.length > 0 && (

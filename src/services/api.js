@@ -5,6 +5,7 @@ const api = axios.create({
     ? `${import.meta.env.VITE_API_URL}/api`
     : '/api',
   headers: { 'Content-Type': 'application/json' },
+  timeout: 15000,
 });
 
 api.interceptors.request.use((config) => {
@@ -24,7 +25,12 @@ api.interceptors.response.use(
         window.location.href = '/login';
       }
     }
-    return Promise.reject(error.response?.data || { message: 'Network error' });
+    if (error.response) {
+      const status = error.response.status;
+      const message = error.response.data?.message || `Server error (${status})`;
+      return Promise.reject({ message, status });
+    }
+    return Promise.reject({ message: 'Network error' });
   }
 );
 

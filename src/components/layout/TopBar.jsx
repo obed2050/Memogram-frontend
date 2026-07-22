@@ -7,7 +7,7 @@ import {
 } from 'react-icons/hi2';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSocket } from '../../contexts/SocketContext';
-import { notificationService } from '../../services';
+import { notificationService, chatService } from '../../services';
 import Avatar from '../ui/Avatar';
 import { cn } from '../../utils';
 
@@ -29,6 +29,17 @@ const TopBar = ({ onMenuToggle, onCreateClick }) => {
       } catch {}
     };
     fetchUnread();
+  }, []);
+
+  useEffect(() => {
+    const fetchUnreadMessages = async () => {
+      try {
+        const res = await chatService.getConversations();
+        const total = (res.data.conversations || []).reduce((sum, c) => sum + (c.unreadCount || 0), 0);
+        setUnreadMessages(total);
+      } catch {}
+    };
+    fetchUnreadMessages();
   }, []);
 
   useEffect(() => {

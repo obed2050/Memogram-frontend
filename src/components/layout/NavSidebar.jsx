@@ -12,15 +12,15 @@ import Avatar from '../ui/Avatar';
 import { cn } from '../../utils';
 
 const navItems = [
-  { path: '/', icon: HiHome, label: 'Home' },
-  { path: '/communities', icon: HiUserGroup, label: 'Communities' },
-  { path: '/communities', icon: HiAcademicCap, label: 'Schools', startsWith: '/communities' },
-  { path: '/clubs', icon: HiUserGroup, label: 'Clubs' },
-  { path: '/memories', icon: HiCalendarDays, label: 'Memories' },
-  { path: '/guess-who', icon: HiQuestionMarkCircle, label: 'Guess Who' },
-  { path: '/before-now', icon: HiArrowRight, label: 'Then & Now', startsWith: '/before-now' },
-  { path: '/on-this-day', icon: HiClock, label: 'On This Day' },
-  { path: '/explore', icon: HiGlobeAlt, label: 'Explore' },
+  { id: 'home', path: '/', icon: HiHome, label: 'Home' },
+  { id: 'communities', path: '/communities', icon: HiUserGroup, label: 'Communities' },
+  { id: 'schools', path: '/communities', icon: HiAcademicCap, label: 'Schools', startsWith: '/communities' },
+  { id: 'clubs', path: '/clubs', icon: HiUserGroup, label: 'Clubs' },
+  { id: 'memories', path: '/memories', icon: HiCalendarDays, label: 'Memories' },
+  { id: 'guess-who', path: '/guess-who', icon: HiQuestionMarkCircle, label: 'Guess Who' },
+  { id: 'then-now', path: '/before-now', icon: HiArrowRight, label: 'Then & Now', startsWith: '/before-now' },
+  { id: 'on-this-day', path: '/on-this-day', icon: HiClock, label: 'On This Day' },
+  { id: 'explore', path: '/explore', icon: HiGlobeAlt, label: 'Explore' },
 ];
 
 function SuggestionItem({ user: u, onDismiss }) {
@@ -107,11 +107,11 @@ const NavSidebar = ({ mobileOpen, onClose }) => {
 
       {/* Navigation - Fixed */}
       <nav className="px-3 space-y-1 shrink-0">
-        {navItems.map(({ path, icon: Icon, label, startsWith }) => {
+        {navItems.map(({ id, path, icon: Icon, label, startsWith }) => {
           const active = isActive(path, startsWith);
           return (
             <Link
-              key={path}
+              key={id}
               to={path}
               onClick={onClose}
               className={cn(

@@ -28,14 +28,9 @@ export const SocketProvider = ({ children }) => {
     const newSocket = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling'],
-    });
-
-    newSocket.on('connect', () => {
-      console.log('Socket connected');
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Socket disconnected');
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 1000,
     });
 
     setSocket(newSocket);

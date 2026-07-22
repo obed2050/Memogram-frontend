@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -5,6 +6,8 @@ import {
   HiChatBubbleOvalLeftEllipsis, HiDocumentDuplicate,
   HiBookmark, HiPhoto, HiPlus,
 } from 'react-icons/hi2';
+import { useSocket } from '../../contexts/SocketContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../../utils';
 
 const navItems = [
@@ -19,6 +22,25 @@ const navItems = [
 
 const BottomNav = ({ onCreateClick }) => {
   const location = useLocation();
+  const socket = useSocket();
+  const { user } = useAuth();
+  const [unreadMessages, setUnreadMessages] = useState(0);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('unread_count', (count) => {
+      setUnreadMessages(count);
+    });
+    socket.on('new_message', (message) => {
+      if (message?.senderId && user && message.senderId !== user.id) {
+        setUnreadMessages((prev) => prev + 1);
+      }
+    });
+    return () => {
+      socket.off('unread_count');
+      socket.off('new_message');
+    };
+  }, [socket, user]);
 
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
@@ -59,7 +81,14 @@ const BottomNav = ({ onCreateClick }) => {
                 active ? 'text-white bg-white/5' : 'text-gray-500'
               )}
             >
-              <Icon className="w-5 h-5" />
+              <div className="relative">
+                <Icon className="w-5 h-5" />
+                {path === '/messages' && unreadMessages > 0 && (
+                  <span className="absolute -top-1.5 -right-2 min-w-[14px] h-[14px] bg-gradient-to-r from-primary to-primary-dark rounded-full text-[8px] flex items-center justify-center font-bold text-white px-0.5">
+                    {unreadMessages > 9 ? '9+' : unreadMessages}
+                  </span>
+                )}
+              </div>
               <span className="text-[9px] font-medium">{label}</span>
               {active && (
                 <motion.div

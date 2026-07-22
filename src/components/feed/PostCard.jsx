@@ -43,7 +43,7 @@ const ImageGrid = ({ images, onImageClick }) => {
           src={images[0]}
           alt=""
           loading="lazy"
-          className="w-full max-h-[600px] object-cover rounded-[18px]"
+          className="w-full max-h-[700px] object-contain rounded-[18px] bg-dark-surface"
         />
       </button>
     );
@@ -253,7 +253,7 @@ const VideoPlayer = ({ src, onOpenFullscreen }) => {
       <video
         ref={videoRef}
         src={src}
-        className="w-full max-h-[600px] object-cover"
+        className="w-full max-h-[700px] object-contain"
         playsInline
         muted={isMuted}
         preload="metadata"

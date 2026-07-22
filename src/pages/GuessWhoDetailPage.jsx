@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import {
   HiArrowLeft, HiTrash, HiQuestionMarkCircle, HiCheckCircle,
 } from 'react-icons/hi2';
-import { guessWhoService } from '../services';
+import { guessWhoService, searchService } from '../services';
 import { useAuth } from '../contexts/AuthContext';
 import GuessWhoCountdown from '../components/guess-who/GuessWhoCountdown';
 import Avatar from '../components/ui/Avatar';
@@ -70,7 +70,6 @@ const GuessWhoDetailPage = () => {
     if (!q.trim()) { setSearchResults([]); return; }
     try {
       setSearching(true);
-      const { searchService } = await import('../services');
       const res = await searchService.searchUsers({ q, limit: 5 });
       setSearchResults(res.data.users || []);
     } catch {
